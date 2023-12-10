@@ -9,3 +9,8 @@ The app will ask for an ngrok authentication token and static domain. These can 
 To reset the token, run `sh start.sh reset` or change the ngrok token and domain values value in the file `data.json`.
 
 To update Facefusion, run `sh start.sh update`.
+
+#  
+
+Let's Connect! 🌍  
+⭐ https://pogscafe.bio.link
