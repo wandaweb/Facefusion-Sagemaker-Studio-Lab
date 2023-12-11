@@ -1,22 +1,20 @@
 #!/bin/bash
 eval "$(conda shell.bash hook)"
+
 # Create the Conda environment
+env_exists=1
 if [ ! -d ~/.conda/envs/facefusion ]
 then
+  env_exists=0
   conda create -y -n facefusion python=3.10
-  conda activate facefusion
-  pip install pyngrok
-fi
+fi 
 
 conda activate facefusion
 
-# Install facefusion if it's not already installed
+# Get Facefusion from GitHub
 if [ ! -d "facefusion" ]
 then
   git clone https://github.com/facefusion/facefusion --branch 2.0.0 --single-branch
-  cd facefusion
-  python install.py --torch cuda --onnxruntime cuda
-  cd ..
 fi
 
 # Update the installation if the parameter "update" was passed by running
@@ -25,12 +23,19 @@ if [ $# -eq 1 ] && [ $1 = "update" ]
 then
   cd facefusion
   git pull
-  python install.py --torch cuda --onnxruntime cuda
-  pip install pyngrok
   cd ..
 fi
 
-conda install opencv -y
+# Install the required packages if the environment needs to be freshly installed or updated 
+if [ $# -eq 1 ] && [ $1 = "update" ] || [ $env_exists = 0 ]
+then
+  cd facefusion
+  python install.py --torch cuda --onnxruntime cuda
+  cd ..
+  pip install pyngrok
+  conda install opencv -y
+  conda install ffmpeg
+fi
 
 # Start facefusion with ngrok
 if [ $# -eq 0 ]
