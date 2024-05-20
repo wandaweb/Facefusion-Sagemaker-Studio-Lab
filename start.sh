@@ -1,6 +1,6 @@
 #!/bin/bash
 eval "$(conda shell.bash hook)"
-
+cwd=$(pwd)
 # Create the Conda environment
 env_exists=1
 if [ ! -d ~/.conda/envs/facefusion ]
@@ -40,8 +40,10 @@ fi
 # Start facefusion with ngrok
 if [ $# -eq 0 ]
 then
-  python start-ngrok.py 
+  cd $cwd/facefusion
+  python ../start-with-tunnel.py 
 elif [ $1 = "reset" ]
 then
-  python start-ngrok.py --reset 
+  cd $cwd/facefusion
+  python ../start-with-tunnel.py --reset 
 fi
