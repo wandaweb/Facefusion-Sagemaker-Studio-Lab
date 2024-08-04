@@ -45,7 +45,7 @@ def find_and_terminate_process(port):
         
 def run_app(env):
     #-+subprocess.run("pwd", shell=False, env=env)
-    cmd = 'python run.py --execution-providers cuda > log.txt & ssh -o StrictHostKeyChecking=no -p 80 -R0:localhost:7860 a.pinggy.io > log.txt'
+    cmd = 'python run.py  > log.txt & ssh -o StrictHostKeyChecking=no -p 80 -R0:localhost:7860 a.pinggy.io > log.txt'
     subprocess.run(cmd, shell=True, env=env)
 
 def print_url():
@@ -91,7 +91,11 @@ def main():
     env = os.environ.copy()
     
     if is_port_in_use(target_port):
-        find_and_terminate_process(target_port)
+        print(f"Port {target_port} is in use.")
+        try:
+            find_and_terminate_process(target_port)
+        except:
+            print(f"Unable to terminate process using port: {target_port}")
     else:
         print(f"Port {target_port} is free.")
     
@@ -151,7 +155,7 @@ def main():
             
     save_data(saved_data)
     
-    cmd = 'python run.py --execution-providers cuda'
+    cmd = 'python run.py '
     
     print("Tunnel: " + args.tunnel)
     if args.tunnel == '3':
