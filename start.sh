@@ -14,7 +14,7 @@ conda activate facefusion
 # Get Facefusion from GitHub
 if [ ! -d "facefusion" ]
 then
-  git clone https://github.com/facefusion/facefusion --branch 2.0.0 --single-branch
+  git clone https://github.com/facefusion/facefusion --branch 2.6.1 --single-branch
 fi
 
 # Update the installation if the parameter "update" was passed by running
@@ -31,10 +31,12 @@ if [ $# -eq 1 ] && [ $1 = "update" ] || [ $env_exists = 0 ]
 then
   cd facefusion
   python install.py --torch cuda --onnxruntime cuda
+  pip install -r requirements.txt
   cd ..
   pip install pyngrok
-  conda install opencv -y
+  #conda install opencv -y
   conda install ffmpeg
+  #pip install --force-reinstall numpy==1.26.4
 fi
 
 # Start facefusion with ngrok
