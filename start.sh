@@ -34,9 +34,7 @@ then
   pip install -r requirements.txt
   cd ..
   pip install pyngrok
-  #conda install opencv -y
-  conda install ffmpeg
-  #pip install --force-reinstall numpy==1.26.4
+  conda install -y ffmpeg
 fi
 
 # Start facefusion with ngrok
